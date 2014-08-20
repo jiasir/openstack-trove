@@ -12,8 +12,8 @@ from lib.charmhelpers.core import (
 
 from lib.charmhelpers.fetch import (
     apt_update,
-    apt_install,
-    filter_installed_packages
+    apt_upgrade,
+    apt_install
 )
 
 hooks = hookenv.Hooks()
@@ -26,6 +26,9 @@ SERVICE = 'openstack-trove'
 def install():
     log('Updating apt source')
     apt_update()
+
+    log('Upgrading packages')
+    apt_upgrade()
 
     log('Installing openstack-trove')
     apt_install('python-trove',
