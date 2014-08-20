@@ -19,7 +19,7 @@ from lib.charmhelpers.fetch import (
 hooks = hookenv.Hooks()
 log = hookenv.log
 
-SERVICE = 'openstack-trove'
+SERVICES = ['trove-api', 'trove-taskmanager', 'trove-conductor']
 
 
 @hooks.hook('install')
@@ -59,12 +59,14 @@ def upgrade_charm():
 
 @hooks.hook('start')
 def start():
-    host.service_restart(SERVICE) or host.service_start(SERVICE)
+    for service in SERVICES:
+        host.service_restart(service) or host.service_start(service)
 
 
 @hooks.hook('stop')
 def stop():
-    host.service_stop(SERVICE)
+    for service in SERVICES:
+        host.service_stop(service)
 
 
 if __name__ == "__main__":
