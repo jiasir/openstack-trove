@@ -1,5 +1,5 @@
 options:
   app-name:
     type: string
-    default: "trove-api"
-    description: "OpenStack trove-api Charm"
+    default: "openstack-trove"
+    description: "OpenStack trove Charm"

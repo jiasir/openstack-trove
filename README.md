@@ -1,23 +1,23 @@
-trove-api
+openstack-trove
 =========
 
-trove-api is designed to deploy a trove-api using juju.
+openstack-trove is designed to deploy a trove using juju.
 
 Overview
 --------
 
-This charm provides a trove-api of OpenStack component from juju charm.
+This charm provides a trove of OpenStack component from juju charm.
 
 Usage
 -----
 
 Step by step instructions on using the charm:
 
-    juju deploy trove-api
+    juju deploy openstack-trove
 
 Add relation for your charm:
 
-    juju add-relation trove-api mysql
+    juju add-relation openstack-trove mysql
      
 
 Configuration
@@ -33,9 +33,9 @@ Though this will be listed in the charm store itself don't assume a user will kn
 
 Author: jiasir (Taio Jia) <jiasir@icloud.com>
 
-Report bugs at: http://bugs.launchpad.net/charms/+source/trove-api
+Report bugs at: http://bugs.launchpad.net/charms/+source/openstack-trove
 
-Location: http://jujucharms.com/charms/distro/trove-api
+Location: http://jujucharms.com/charms/distro/openstack-trove
 
 * Be sure to remove the templated parts before submitting to https://launchpad.net/charms for inclusion in the charm store.
 

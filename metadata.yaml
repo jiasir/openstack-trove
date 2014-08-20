@@ -1,14 +1,14 @@
-name: trove-api
-summary: OpenStack trove-api
+name: openstack-trove
+summary: OpenStack trove compents
 maintainer: jiasir (Taio Jia) <jiasir@icloud.com>
 description: |
-  trove-api is designed to deploy a trove using juju.
+  openstack-trove is designed to deploy a trove using juju.
 categories:
   - openstack
 subordinate: false
 provides:
   openstack-trove:
-    interface: trove-api
+    interface: openstack-trove
 requires:
   shared-db:
     interface: mysql-shared
