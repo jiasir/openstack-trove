@@ -2,3 +2,6 @@ destination: lib/charmhelpers
 branch: lp:charm-helpers
 include:
   - core
+  - contrib
+  - fetch
+  - payload
