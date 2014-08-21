@@ -36,6 +36,3 @@ Author: jiasir (Taio Jia) <jiasir@icloud.com>
 Report bugs at: http://bugs.launchpad.net/charms/+source/openstack-trove
 
 Location: http://jujucharms.com/charms/distro/openstack-trove
-
-* Be sure to remove the templated parts before submitting to https://launchpad.net/charms for inclusion in the charm store.
-
