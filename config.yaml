@@ -18,3 +18,19 @@ options:
     type: string
     default: /etc/trove/trove.conf
     description: Full path to trove.conf
+  trove-taskmanager-config:
+    type: string
+    default: /etc/trove/trove-taskmanager.conf
+    description: Full path to trove-taskmanager.conf
+  trove-conductor-config:
+    type: string
+    default: /etc/trove/trove-conductor.conf
+    description: Full path to trove-conductor.conf
+  trove-user:
+    type: string
+    default: trove
+    description: The trove username
+  trove-pass:
+    type: string
+    default: trove
+    description: The trove password

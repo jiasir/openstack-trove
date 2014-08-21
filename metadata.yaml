@@ -1,6 +1,6 @@
 name: openstack-trove
 summary: OpenStack trove compents
-maintainer: jiasir (Taio Jia) <jiasir@icloud.com>
+maintainer: jiasir <jiasir@icloud.com>
 description: |
   openstack-trove is designed to deploy a trove using juju.
 categories:

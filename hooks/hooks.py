@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(os.environ['CHARM_DIR'], 'lib'))
 
 from lib.charmhelpers.core import (
     hookenv,
-    host,
+    host
 )
 
 from lib.charmhelpers.fetch import (
@@ -16,14 +16,21 @@ from lib.charmhelpers.fetch import (
     apt_install
 )
 
+from lib.charmhelpers.contrib.openstack.utils import (
+    configure_installation_source
+)
+
 hooks = hookenv.Hooks()
 log = hookenv.log
+config = hookenv.config()
 
 SERVICES = ['trove-api', 'trove-taskmanager', 'trove-conductor']
 
 
 @hooks.hook('install')
 def install():
+    configure_installation_source(config('openstack-origin'))
+
     log('Updating apt source')
     apt_update()
 
@@ -41,8 +48,6 @@ def install():
 
 @hooks.hook('config-changed')
 def config_changed():
-    config = hookenv.config()
-
     for key in config:
         if config.changed(key):
             log("config['{}'] changed from {} to {}".format(
@@ -50,6 +55,55 @@ def config_changed():
 
     config.save()
     start()
+
+
+@hooks.hook('shared-db-relation-joined')
+def db_joined(rid=None):
+    if hookenv.is_relation_made('pgsql-db'):
+        # error, postgresql is used
+        e = ('Attempting to associate a mysql database when there is already '
+             'associated a postgresql one')
+        log(e, level=hookenv.ERROR)
+        raise Exception(e)
+
+    hookenv.relation_set(relation_id=rid,
+                         nova_database=config('database'),
+                         nova_username=config('database-user'),
+                         nova_hostname=hookenv.unit_get('private-address'))
+
+
+@hooks.hook('pgsql-db-relation-joined')
+def pgsql_db_joined():
+    if hookenv.is_relation_made('shared-db'):
+        # raise error
+        e = ('Attempting to associate a postgresql database when'
+             ' there is already associated a mysql one')
+        log(e, level=hookenv.ERROR)
+        raise Exception(e)
+
+    hookenv.relation_set(database=config('database'))
+
+
+@hooks.hook('shared-db-relation-changed')
+@host.service_restart('trove-api')
+@host.service_restart('trove-taskmanager')
+@host.service_restart('trove-conductor')
+def db_changed():
+    if 'shared-db' not in config.complete_contexts():
+        log('shared-db relation incomplete. Peer not ready?')
+        return
+    config.save()
+
+
+@hooks.hook('pgsql-db-relation-changed')
+@host.service_restart('trove-api')
+@host.service_restart('trove-taskmanager')
+@host.service_restart('trove-conductor')
+def postgresql_db_changed():
+    if 'pgsql-db' not in config.complete_contexts():
+        log('pgsql-db relation incomplete. Peer not ready?')
+        return
+    config.save()
 
 
 @hooks.hook('upgrade-charm')
