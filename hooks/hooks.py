@@ -29,8 +29,6 @@ SERVICES = ['trove-api', 'trove-taskmanager', 'trove-conductor']
 
 @hooks.hook('install')
 def install():
-    configure_installation_source(config('openstack-origin'))
-
     log('Updating apt source')
     apt_update()
 
